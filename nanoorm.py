@@ -33,7 +33,7 @@ def read(table, **kwargs):
     sql = list()
     sql.append("SELECT * FROM %s " % table)
     if kwargs:
-        sql.append("WHERE " + " AND ".join("%s = %s" % (k, repr(v)) for k, v in kwargs.iteritems()))
+        sql.append("WHERE " + " AND ".join("%s = %s" % (k, repr(v)) for k, v in kwargs.items()))
     sql.append(";")
     return "".join(sql)
 
@@ -62,7 +62,7 @@ def upsert(table, **kwargs):
     sql.append(") VALUES (")
     sql.append(", ".join(values))
     sql.append(") ON DUPLICATE KEY UPDATE ")
-    sql.append(", ".join("%s = '%s'" % (k, v) for k, v in kwargs.iteritems()))
+    sql.append(", ".join("%s = '%s'" % (k, v) for k, v in kwargs.items()))
     sql.append(";")
     return "".join(sql)
 
@@ -71,6 +71,6 @@ def delete(table, **kwargs):
     """ deletes rows from table where **kwargs match """
     sql = list()
     sql.append("DELETE FROM %s " % table)
-    sql.append("WHERE " + " AND ".join("%s = %s" % (k, repr(v)) for k, v in kwargs.iteritems()))
+    sql.append("WHERE " + " AND ".join("%s = %s" % (k, repr(v)) for k, v in kwargs.items()))
     sql.append(";")
     return "".join(sql)
