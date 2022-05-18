@@ -25,7 +25,11 @@ Note: Don't pass user-controlled variables un-sanitized! Examples of malicious u
 """
 
 
-
+def create_table(table, **fields):
+  return "\n".join(
+    [ "CREATE TABLE %s (" % table,
+      ",\n".join(["\t%-12s\t%s" % (fname, ftyp) for fname, ftyp in fields.items()]),
+      ");" ])
 
 
 def read(table, **kwargs):
