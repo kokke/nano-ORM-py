@@ -25,11 +25,14 @@ Note: Don't pass user-controlled variables un-sanitized! Examples of malicious u
 """
 
 
-def create_table(table, **fields):
-  return "\n".join(
-    [ "CREATE TABLE %s (" % table,
-      ",\n".join(["\t%-12s\t%s" % (fname, ftyp) for fname, ftyp in fields.items()]),
-      ");" ])
+def create_table(table, **kwargs):
+  """ Generates SQL for a CREATE TABLE statement, matching the columns passed as kwargs
+      E.g. create_table("tbl_name", col1="integer primary key autoincrement", col2="text not null") """
+  sql = list()
+  sql.append("CREATE TABLE %s (" % table)
+  sql.append(",\n".join(["\t%-12s\t%s" % (col_name, col_typ) for col_name, col_typ in kwargs.items()]))
+  sql.append(");")
+  return "\n".join(sql)
 
 
 def read(table, **kwargs):
